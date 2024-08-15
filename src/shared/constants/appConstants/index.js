@@ -1,0 +1,20 @@
+export const text = {
+    LOGIN: 'Login',
+    ITEMS: 'Items',
+    HOME: 'Home',
+    LIST: 'List',
+    SCREEN: "Screen",
+    SCREEN_ONE: 'Screen One',
+    SCREEN_TWO: 'Screen Two',
+    SCREEN_THREE: 'Screen Three',
+    NEXT: 'Next',
+    SUBMIT: 'Submit',
+    DATE: 'Date',
+    NAME: 'Name',
+    USERNAME: 'User Name',
+    PASSWORD: 'Password',
+    GOOGLE_LOGIN: 'Google Login',
+    ERROR: 'Please Enter correct username and password',
+    USERNAME_ERROR: 'Please enter user nama',
+    PASSWORD_ERROR: 'Please enter user password'
+};

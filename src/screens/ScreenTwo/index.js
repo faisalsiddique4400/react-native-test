@@ -17,10 +17,7 @@ const ScreenTwo = () => {
         <MyLayout name={text.SCREEN_TWO} backButton>
             <Text style={styles.count}>2</Text>
             <Button
-                styles={{
-                    position: 'absolute',
-                    bottom: verticalScale(40)
-                }}
+                styles={styles.button}
                 text={text?.SCREEN_TWO}
                 onPress={() => handleNext()}
             />
@@ -38,6 +35,10 @@ const styles = StyleSheet.create({
             color: DEFAULT_THEME?.colors?.black
 
         }],
+    button: {
+        position: 'absolute',
+        bottom: verticalScale(40)
+    }
 });
 
 export default ScreenTwo

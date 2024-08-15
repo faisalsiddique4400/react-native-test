@@ -1,6 +1,6 @@
 export const text = {
     LOGIN: 'Login',
-    ITEMS: 'Items',
+    TOGGLE_SWITCH: 'Toggle Switch',
     HOME: 'Home',
     LIST: 'List',
     SCREEN: "Screen",
@@ -16,5 +16,11 @@ export const text = {
     GOOGLE_LOGIN: 'Google Login',
     ERROR: 'Please Enter correct username and password',
     USERNAME_ERROR: 'Please enter user nama',
-    PASSWORD_ERROR: 'Please enter user password'
+    PASSWORD_ERROR: 'Please enter user password',
+    GOOGLE_LOGIN_CANCEL: "Google login cancelled",
+    LOGIN_IN_PROCESS: "Login in progress",
+    PLAY_SERVICE: 'Play service not available',
+    SERVER_ERROR: "Server error",
+    LOGIN_SUCCESSFULLY: 'Login successfully'
+
 };

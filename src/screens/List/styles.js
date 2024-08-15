@@ -8,6 +8,14 @@ const styles = (colors) =>
       flex: 1,
       backgroundColor: colors?.secondary,
     },
+    subContainer: {
+      marginTop: verticalScale(20),
+      width: DEVICE_WIDTH - scale(32),
+      flexDirection: "row",
+      justifyContent: "space-between",
+      alignSelf: "center",
+      marginBottom: moderateScale(5),
+    },
     count: [
       FONTS_STYLE?.HEADER,
       {

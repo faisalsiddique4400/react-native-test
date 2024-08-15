@@ -1,7 +1,6 @@
 import { StyleSheet, Text } from 'react-native'
 import React from 'react'
 import { DEFAULT_THEME, FONTS_STYLE } from '../../shared/themes';
-import { goBack } from '../../shared/services/navigationServices';
 import { verticalScale } from 'react-native-size-matters';
 import { MyLayout } from '../../shared/components';
 import { text } from '../../shared/constants/appConstants'

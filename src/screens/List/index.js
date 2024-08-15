@@ -1,7 +1,6 @@
 import { View, Text, FlatList } from "react-native";
 import React, { useState } from "react";
 import { Input, Button, CalenderModel } from "../../shared/components/common";
-import { DEVICE_WIDTH } from "../../shared/themes";
 import { moderateScale, scale, verticalScale } from "react-native-size-matters";
 import { useSelector, useDispatch } from "react-redux";
 import { selectList, UPDATE_LIST } from "../../shared/redux/reducers";
@@ -9,7 +8,7 @@ import ListData from "./component";
 import { MyLayout } from "../../shared/components";
 import { useTheme } from "@react-navigation/native";
 import styles from "./styles";
-
+import { text } from '../../shared/constants/appConstants'
 const List = () => {
   const { colors } = useTheme();
   const myStyle = styles(colors);
@@ -57,24 +56,17 @@ const List = () => {
       setNameError("");
       setDateError("");
     } else {
-      !name && setNameError("Please enter name");
-      !date && setDateError("Please enter date");
+      !name && setNameError(text?.USERNAME_ERROR);
+      !date && setDateError(text?.PASSWORD_ERROR);
     }
   };
   return (
-    <MyLayout name={"List"}>
+    <MyLayout name={text?.LIST}>
       <View
-        style={{
-          marginTop: verticalScale(20),
-          width: DEVICE_WIDTH - scale(32),
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignSelf: "center",
-          marginBottom: moderateScale(5),
-        }}
+        style={myStyle?.subContainer}
       >
         <Input
-          headerText={"Name"}
+          headerText={text.NAME}
           width={moderateScale(160)}
           onChangeText={(e) => {
             setName(e);
@@ -88,7 +80,7 @@ const List = () => {
         />
 
         <Input
-          headerText={"Date"}
+          headerText={text.DATE}
           width={moderateScale(160)}
           editable={false}
           value={date ? formatDate(date) : ""}
@@ -102,12 +94,12 @@ const List = () => {
         />
       </View>
       <Button
-        text={"Submit"}
+        text={text?.SUBMIT}
         styles={{ marginBottom: moderateScale(17) }}
         onPress={handlePress}
       />
       <View style={myStyle.horizontalDivider} />
-      <Text style={myStyle.heading}>List</Text>
+      <Text style={myStyle.heading}>{text?.LIST}</Text>
 
       <FlatList
         data={list}

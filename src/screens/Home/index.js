@@ -8,13 +8,13 @@ import { selectData } from "../../shared/redux/reducers";
 import styles from "./styles";
 import { useTheme } from "@react-navigation/native";
 import { requestNotificationPermission } from "../../shared/utils";
+import { text } from '../../shared/constants/appConstants'
 
 const Home = () => {
   const data = useSelector(selectData);
   const { colors } = useTheme();
   const myStyle = styles(colors);
   const { scheduleNotification } = useNotifications();
-  const appState = useRef(AppState.currentState);
 
   const handleScheduleNotification = () => {
     const date = new Date(Date.now() + 10 * 60 * 1000); // Schedule notification 10 minutes from now
@@ -29,37 +29,34 @@ const Home = () => {
     return <ToggleData data={item} index={index} />;
   };
   constHeader = () => {
-    return <Text style={myStyle.heading}> Toggle Switch</Text>;
+    return <Text style={myStyle.heading}> {text?.TOGGLE_SWITCH}</Text>;
   };
 
   useEffect(() => {
     requestNotificationPermission();
   }, []);
 
-  const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [appState, setAppState] = useState(AppState.currentState);
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
-      if (
-        appState.current.match(/inactive|background/) &&
-        nextAppState === 'inactive'
-      ) {
+    // Function to handle app state change
+    const handleAppStateChange = (nextAppState) => {
+      if (nextAppState === 'inactive' || nextAppState === 'background') {
         handleScheduleNotification()
-        console.log('App has come to the foreground!');
       }
+      setAppState(nextAppState);
+    };
+    // Subscribe to AppState changes
+    const subscription = AppState.addEventListener('change', handleAppStateChange);
 
-      appState.current = nextAppState;
-      setAppStateVisible(appState.current);
-      console.log('AppState', appState.current);
-    });
-
+    // Cleanup the subscription on unmount
     return () => {
       subscription.remove();
     };
-  }, []);
+  }, [appState]);
 
   return (
-    <MyLayout name={"Home"}>
+    <MyLayout name={text?.HOME}>
       <FlatList
         data={data}
         bounces={false}

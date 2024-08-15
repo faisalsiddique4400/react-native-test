@@ -20,7 +20,6 @@ import { IS_ANDROID } from "../../shared/themes";
 import { ICON_GOOGLE } from "../../assets";
 import { useTheme } from "@react-navigation/native";
 import styles from "./styles";
-import userSlice from "../../shared/redux/reducers/userSlice";
 
 const Login = () => {
   const { colors } = useTheme()
@@ -45,7 +44,10 @@ const Login = () => {
         password: password,
       };
 
-      dispatch(logInAsync(apiPayload)).unwrap().catch((err) => {
+      dispatch(logInAsync(apiPayload)).unwrap().then((res) => {
+        toast.hideAll();
+        toast.show(text.LOGIN_SUCCESSFULLY, { error: false });
+      }).catch((err) => {
         setLoader(false);
         err?.message && toast.show(err?.message, { error: true });
       });
@@ -69,37 +71,43 @@ const Login = () => {
       await GoogleSignin.hasPlayServices();
       configureGoogleSignIn();
       const userInfo = await GoogleSignin.signIn();
-      dispatch(ADD_TOKEN(userInfo?.serverAuthCode ? true : false))
-      await GoogleSignin.signOut();
+      if (userInfo?.serverAuthCode) {
+        dispatch(ADD_TOKEN(userInfo?.serverAuthCode))
+        toast.hideAll();
+        toast.show(text.LOGIN_SUCCESSFULLY, { error: false });
+        await GoogleSignin.signOut();
+      }
     } catch (error) {
       // Handling the different error cases
       switch (error.code) {
         case statusCodes.SIGN_IN_CANCELLED:
           toast.hideAll();
-          toast.show("Google login cancelled", { error: true });
+          toast.show(text.GOOGLE_LOGIN_CANCEL, { error: true });
           break;
         case statusCodes.IN_PROGRESS:
           toast.hideAll();
-          toast.show("Login in progress", { error: false });
+          toast.show(text.LOGIN_IN_PROCESS, { info: true });
           break;
         case statusCodes.PLAY_SERVICES_NOT_AVAILABLE:
           await GoogleSignin.signOut();
           toast.hideAll();
+          toast.show(text.PLAY_SERVICE, { error: true });
+
           break;
         default:
           toast.hideAll();
           await GoogleSignin.signOut();
-          toast.show("Server error", { error: true });
+          toast.show(text.SERVER_ERROR, { error: true });
           break;
       }
     }
   };
 
   return (
-    <MyLayout name={"Log In"}>
+    <MyLayout name={text?.LOGIN}>
       <View style={myStyle?.container}>
         <Input
-          headerText={"UserName"}
+          headerText={text?.USERNAME}
           onChangeText={setUserName}
           value={userName}
           errorMessage={userNameError}
@@ -109,7 +117,7 @@ const Login = () => {
           originalColor={userNameError && colors?.red} // Change color if there's an error
         />
         <Input
-          headerText={"Password"}
+          headerText={text?.PASSWORD}
           onChangeText={setPassword}
           value={password}
           secureTextEntry
@@ -123,14 +131,14 @@ const Login = () => {
         <Button
           loader={loader}
           disabled={loader}
-          text="Login"
+          text={text?.LOGIN}
           onPress={handleLogin}
           styles={{ marginVertical: verticalScale(15) }} // Custom button styling
         />
         {IS_ANDROID &&
           <SocialButton
             icon={ICON_GOOGLE}
-            text={"Google Login"}
+            text={text?.GOOGLE_LOGIN}
             onPress={handleGoogleLogin} // Handle Google login when the button is pressed
           />}
       </View>

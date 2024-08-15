@@ -1,6 +1,6 @@
 import { Text, StyleSheet } from 'react-native'
 import React from 'react'
-import { Statusbar, Header, Button } from '../../shared/components/common'
+import { Button } from '../../shared/components/common'
 import { DEFAULT_THEME, FONTS_STYLE } from '../../shared/themes';
 import { navigate } from '../../shared/services/navigationServices';
 import * as CONSTANTS from '../../shared/constants/navigationConstants';
@@ -18,10 +18,7 @@ const ScreenOne = () => {
             <Text
                 style={styles.count}>1</Text>
             <Button
-                styles={{
-                    position: 'absolute',
-                    bottom: verticalScale(90)
-                }}
+                styles={styles.button}
                 text={text.NEXT}
                 onPress={() => handleNext()}
             />
@@ -38,6 +35,10 @@ const styles = StyleSheet.create({
             color: DEFAULT_THEME?.colors?.black
 
         }],
+    button: {
+        position: 'absolute',
+        bottom: verticalScale(90)
+    }
 });
 
 

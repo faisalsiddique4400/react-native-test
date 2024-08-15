@@ -31,7 +31,7 @@ export const logInAsync = createAsyncThunk(
       if (res.status === 200) {
         if (apiPayload.userName == 'admin' && apiPayload.password == 'password123') { return res.data }
         else {
-          return rejectWithValue({ message: 'please Enter correct username and password' })
+          return rejectWithValue({ message: 'Please enter correct username and password' })
         }
       } else {
         return rejectWithValue(res?.data?.message ?? res?.message);

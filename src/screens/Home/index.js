@@ -56,7 +56,7 @@ const Home = () => {
   }, [appState]);
 
   return (
-    <MyLayout name={text?.HOME}>
+    <MyLayout name={text?.HOME} logout>
       <FlatList
         data={data}
         bounces={false}

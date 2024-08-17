@@ -3,9 +3,10 @@ import React from "react";
 import style from "./styles";
 import { FONTS_STYLE } from "../../../themes";
 import { useTheme } from "@react-navigation/native";
-import { ICON_BACK } from "../../../../assets";
+import { ICON_BACK, ICON_LOGOUT } from "../../../../assets";
 const CustomHeader = ({
   backArrow,
+  logOut,
   onRightIconPress = () => { },
   onLeftIconPress = () => { },
   headerText,
@@ -31,13 +32,13 @@ const CustomHeader = ({
 
       <View style={myStyle?.subContainer}>
         <TouchableOpacity
-          disabled={!backArrow}
+          disabled={!(backArrow || logOut)}
           style={myStyle.touchableContainerStyle}
           hitSlop={15}
           activeOpacity={0.6}
           onPress={onLeftIconPress}
         >
-          {backArrow && <Image source={ICON_BACK} style={myStyle.iconStyle} />}
+          {(backArrow || logOut) && <Image source={logOut ? ICON_LOGOUT : ICON_BACK} style={myStyle.iconStyle} />}
         </TouchableOpacity>
         <View style={myStyle?.headerTextContainer}>
           <Text
